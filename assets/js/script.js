@@ -93,8 +93,8 @@ $(".list-group").on("blur", "input[type='text']", function () {
     .closest("list-group-item")
     .index();
   // update task in array and re-save to localStorage
-  tasks[status][index].date= date
-  saveTasks()
+  tasks[status][index].date= date;
+  saveTasks();
   // recreate span element with bootstrap classes
   var taskSpan = $("<span>")
     .addClass("badge badge-primary badge-pill")
