@@ -53,7 +53,7 @@ var auditTask = function (taskEl) {
     .text()
     .trim()
 
-    console.log(date)
+  console.log(date)
 
   // convert to moment object at 5:00pm
   var time = moment(date, "L").set("hour", 17)
@@ -78,15 +78,16 @@ $(".card .list-group").sortable({
   tolerance: "pointer",
   helper: "clone",
   activate: function (event, ui) {  
-    
+    $(this).addClass("dropover")
+    $(".bottom-trash").removeClass("bottom-trash-drag")
   },
   over: function (event, ui) {  
-    
+    $(event.target).addClass("dropover-active")
   },
   out: function (event) {  
-    
+    $(event.target).removeClass("dropover-active")
   },
-  update: function (event) {
+  update: function () {
     // array to store the task data in
     var tempArr = []
     // loop over current set of children in sortable list
@@ -112,13 +113,14 @@ $("#trash").droppable({
   tolerance: "touch",
   drop: function (event, ui) {  
     ui.draggable.remove()
-    
+    $(".bottom-trash").removeClass("bottom-trash-active")
   },
   over: function (event, ui) {  
-    
+    console.log(ui)
+    $(".bottom-trash").addClass("bottom-trash-active")
   },
   out: function (event, ui) {
-    
+    $(".bottom-trash").removeClass("bottom-trash-active")
   }
 })
 
@@ -240,6 +242,12 @@ $("#remove-tasks").on("click", function() {
   }
   saveTasks();
 });
+
+setInterval(function () { 
+  $(".card .list-group-item").each(function () {
+    auditTask($(this))
+  })
+}, 1800000)
 
 // load tasks for the first time
 loadTasks();
